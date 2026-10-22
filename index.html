@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XM Longview — A Private Investment Journal for iPhone</title>
+<meta name="description" content="XM Longview is a private, on-device investment journal for long-term investors. Track holdings, log transactions, review your thesis, and plan with five financial calculators. No account, no ads, no tracking.">
+<link rel="canonical" href="https://xmlongview.app/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="XM Longview — A Private Investment Journal for iPhone">
+<meta property="og:description" content="A local-first portfolio journal. Your data never leaves your device.">
+<meta property="og:url" content="https://xmlongview.app/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="apple-itunes-app" content="app-id=0000000000">
+<meta name="theme-color" content="#0E1116">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234C7CF0'/><path d='M22 66 L40 44 L54 58 L78 30' stroke='white' stroke-width='9' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<style>
+  :root{
+    --bg:#0E1116; --bg-soft:#141922; --card:#171E29; --line:#242C3A;
+    --text:#EDF1F7; --muted:#9AA6B8; --blue:#4C7CF0; --purple:#7A5AF8;
+    --teal:#2BC8A2; --amber:#F0A04B; --danger:#E26D8A;
+    --radius:18px; --maxw:1080px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  header{
+    position:sticky;top:0;z-index:50;backdrop-filter:saturate(180%) blur(14px);
+    background:rgba(14,17,22,.82);border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;gap:14px;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em;color:var(--text)}
+  .brand:hover{text-decoration:none}
+  .logo{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--blue),var(--purple));
+    display:grid;place-items:center;flex:none}
+  .logo svg{width:18px;height:18px}
+  .navlinks{margin-left:auto;display:flex;align-items:center;gap:22px;font-size:14.5px}
+  .navlinks a{color:var(--muted)}
+  .navlinks a:hover{color:var(--text);text-decoration:none}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;
+    font-size:14.5px;font-weight:600;border:1px solid var(--line);background:var(--card);color:var(--text);
+  }
+  .btn:hover{text-decoration:none;border-color:#3A465C}
+  .btn-primary{background:linear-gradient(135deg,var(--blue),var(--purple));border-color:transparent;color:#fff}
+  .hero{padding:84px 0 64px;text-align:center;position:relative;overflow:hidden}
+  .hero:before{
+    content:"";position:absolute;inset:-40% 20% auto -10%;height:520px;
+    background:radial-gradient(closest-side,rgba(76,124,240,.28),transparent 70%);pointer-events:none;
+  }
+  .hero>*{position:relative}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;
+    border:1px solid var(--line);background:var(--bg-soft);color:var(--muted);font-size:13.5px;margin-bottom:22px;
+  }
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(43,200,162,.16)}
+  h1{
+    font-size:clamp(34px,6vw,58px);line-height:1.08;letter-spacing:-.03em;margin:0 0 18px;font-weight:800;
+  }
+  .grad{background:linear-gradient(100deg,#8FB2FF,#B79BFF 55%,#6FE3C4);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .lead{max-width:660px;margin:0 auto 30px;color:var(--muted);font-size:clamp(16px,2.2vw,19px)}
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .store{
+    display:inline-flex;align-items:center;gap:10px;padding:13px 24px;border-radius:14px;
+    background:var(--text);color:#0E1116;font-weight:700;font-size:16px;border:none;
+  }
+  .store:hover{text-decoration:none;opacity:.92}
+  .store svg{width:22px;height:22px}
+  section{padding:64px 0}
+  h2{font-size:clamp(24px,3.4vw,34px);letter-spacing:-.02em;margin:0 0 12px;font-weight:750}
+  .sub{color:var(--muted);max-width:620px;margin:0 0 34px}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;
+  }
+  .card h3{margin:14px 0 8px;font-size:17px;letter-spacing:-.01em}
+  .card p{margin:0;color:var(--muted);font-size:14.8px}
+  .ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none}
+  .ico svg{width:20px;height:20px}
+  .bg-blue{background:rgba(76,124,240,.16);color:var(--blue)}
+  .bg-purple{background:rgba(122,90,248,.16);color:var(--purple)}
+  .bg-teal{background:rgba(43,200,162,.16);color:var(--teal)}
+  .bg-amber{background:rgba(240,160,75,.16);color:var(--amber)}
+  .bg-pink{background:rgba(226,109,138,.16);color:var(--danger)}
+  .bg-cyan{background:rgba(63,186,194,.16);color:#5FD3DB}
+
+  .phone{
+    margin:0 auto;max-width:280px;border:1px solid var(--line);border-radius:34px;background:#0B0E13;
+    padding:12px;box-shadow:0 30px 80px rgba(0,0,0,.55);
+  }
+  .screen{border-radius:24px;background:linear-gradient(180deg,#151B25,#10141B);padding:18px 16px 20px;min-height:430px}
+  .bar{height:8px;width:56px;border-radius:99px;background:#2A3444;margin:0 auto 16px}
+  .kpi{background:#1B2331;border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+  .kpi small{display:block;color:var(--muted);font-size:11.5px;letter-spacing:.02em;text-transform:uppercase}
+  .kpi b{font-size:24px;letter-spacing:-.02em}
+  .up{color:var(--teal);font-size:13px;font-weight:600}
+  .rows{display:flex;flex-direction:column;gap:9px}
+  .row{display:flex;align-items:center;gap:10px;background:#1B2331;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+  .row .t{font-size:13px;font-weight:600}
+  .row .s{font-size:11.5px;color:var(--muted)}
+  .chip{margin-left:auto;font-size:12px;font-weight:700}
+  .pos{display:flex;justify-content:space-between;font-size:11.5px;color:var(--muted);margin:14px 2px 6px}
+
+  .split{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center}
+  .steps{counter-reset:s}
+  .step{position:relative;padding:0 0 22px 42px}
+  .step:before{
+    counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;border-radius:9px;
+    background:rgba(76,124,240,.16);color:var(--blue);font-size:13.5px;font-weight:700;display:grid;place-items:center;
+  }
+  .step:after{content:"";position:absolute;left:13.5px;top:32px;bottom:6px;width:1px;background:var(--line)}
+  .step:last-child:after{display:none}
+  .step h4{margin:2px 0 4px;font-size:16px}
+  .step p{margin:0;color:var(--muted);font-size:14.5px}
+
+  ul.clean{list-style:none;margin:0;padding:0}
+  ul.clean li{display:flex;gap:11px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
+  ul.clean li:last-child{border-bottom:none}
+  .tick{flex:none;width:20px;height:20px;border-radius:50%;background:rgba(43,200,162,.16);color:var(--teal);
+    display:grid;place-items:center;margin-top:2px}
+  .tick svg{width:12px;height:12px}
+  .no{flex:none;width:20px;height:20px;border-radius:50%;background:rgba(226,109,138,.16);color:var(--danger);
+    display:grid;place-items:center;margin-top:2px}
+  .no svg{width:12px;height:12px}
+
+  .notice{
+    border:1px solid rgba(240,160,75,.35);background:rgba(240,160,75,.08);border-radius:var(--radius);
+    padding:22px;display:flex;gap:14px;align-items:flex-start;
+  }
+  .notice h3{margin:0 0 6px;font-size:16px;color:var(--amber)}
+  .notice p{margin:0;color:#D9C4A8;font-size:14.5px}
+
+  .faq{border-top:1px solid var(--line)}
+  details{border-bottom:1px solid var(--line);padding:18px 0}
+  summary{cursor:pointer;font-weight:650;font-size:16px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+  summary::-webkit-details-marker{display:none}
+  summary:after{content:"+";color:var(--muted);font-size:20px;line-height:1}
+  details[open] summary:after{content:"–"}
+  details p{margin:10px 0 0;color:var(--muted);font-size:14.8px}
+
+  .cta-band{
+    border:1px solid var(--line);border-radius:26px;background:
+      radial-gradient(1000px 300px at 15% 0%,rgba(76,124,240,.20),transparent 60%),
+      radial-gradient(800px 300px at 85% 100%,rgba(43,200,162,.16),transparent 60%),var(--card);
+    padding:48px 32px;text-align:center;
+  }
+  footer{border-top:1px solid var(--line);padding:34px 0 46px;color:var(--muted);font-size:14px}
+  .fgrid{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+  .fgrid nav{margin-left:auto;display:flex;gap:18px;flex-wrap:wrap}
+  footer a{color:var(--muted)}
+  .fine{margin:16px 0 0;font-size:12.5px;color:#78849A;max-width:760px}
+
+  @media (max-width:900px){
+    .g3{grid-template-columns:repeat(2,1fr)}
+    .split{grid-template-columns:1fr;gap:28px}
+    .navlinks{display:none}
+  }
+  @media (max-width:600px){
+    section{padding:48px 0}
+    .hero{padding:56px 0 40px}
+    .g3,.g2{grid-template-columns:1fr}
+    .fgrid nav{margin-left:0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="index.html">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 17 L10 10 L14 14 L20 6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <span>XM Longview</span>
+    </a>
+    <div class="navlinks">
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a class="btn btn-primary" href="#get">Get the App</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <span class="eyebrow"><span class="dot"></span> iPhone · iOS 16 and later · No account needed</span>
+    <h1>Keep your investing <span class="grad">journal</span>,<br>not your nerve.</h1>
+    <p class="lead">
+      XM Longview is a private, on-device investment journal for people who think in years, not minutes.
+      Record what you own, log what you bought, and watch your thesis unfold over time — with nothing
+      designed to tempt you into a trade.
+    </p>
+    <div class="cta">
+      <a class="store" href="#get">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2.1-1.1 2.8-2.2c.9-1.3 1.3-2.5 1.3-2.6-.1 0-2.5-1-2.5-3.9zM14.2 5.2c.6-.8 1-1.8.9-2.9-.9 0-2 .6-2.6 1.4-.6.7-1.1 1.7-.9 2.8 1 .1 2-.5 2.6-1.3z"/></svg>
+        Download on the App Store
+      </a>
+      <a class="btn" href="support.html">Contact Support</a>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-top:8px">
+    <div class="split">
+      <div>
+        <h2>A notebook, not a trading desk</h2>
+        <p class="sub">
+          There are no live quotes, no price alerts, no signals, and no path from a journal entry to a
+          brokerage order. Every number you see is computed on your device from the transactions you entered,
+          so the math always matches your own records.
+        </p>
+        <ul class="clean">
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span><strong>Fully offline.</strong> No account, no sign-in, no cloud sync, no servers to talk to.</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span><strong>No tracking.</strong> No analytics SDKs, no advertising identifiers, no third-party trackers.</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span><strong>Not a broker.</strong> XM Longview cannot buy, sell, hold, or transfer any asset.</span></li>
+          <li><span class="tick"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span><strong>Educational only.</strong> Nothing in the app is investment, tax, or legal advice.</span></li>
+        </ul>
+      </div>
+      <div class="phone" aria-label="Preview of the XM Longview dashboard">
+        <div class="screen">
+          <div class="bar"></div>
+          <div class="kpi">
+            <small>Total Market Value</small>
+            <b>$184,320.55</b>
+            <div class="up">▲ 21.4% all time</div>
+          </div>
+          <div class="pos"><span>Asset Allocation</span><span>Tap a slice</span></div>
+          <div class="kpi" style="padding:12px">
+            <svg viewBox="0 0 200 84" width="100%" height="84" role="img" aria-label="Donut chart of asset allocation">
+              <g transform="translate(100,42)">
+                <circle r="34" fill="none" stroke="#4C7CF0" stroke-width="17"
+                        stroke-dasharray="132 82" transform="rotate(-90)"/>
+                <circle r="34" fill="none" stroke="#7A5AF8" stroke-width="17"
+                        stroke-dasharray="58 156" stroke-dashoffset="-136" transform="rotate(-90)"/>
+                <circle r="34" fill="none" stroke="#2BC8A2" stroke-width="17"
+                        stroke-dasharray="40 174" stroke-dashoffset="-198" transform="rotate(-90)"/>
+              </g>
+            </svg>
+          </div>
+          <div class="rows">
+            <div class="row"><span class="ico bg-blue" style="width:28px;height:28px;border-radius:8px"></span>
+              <span><span class="t">VTI</span><br><span class="s">ETF · 214 shares</span></span><span class="chip" style="color:var(--blue)">48%</span></div>
+            <div class="row"><span class="ico bg-purple" style="width:28px;height:28px;border-radius:8px"></span>
+              <span><span class="t">AAPL</span><br><span class="s">Stock · 60 shares</span></span><span class="chip" style="color:var(--purple)">21%</span></div>
+            <div class="row"><span class="ico bg-teal" style="width:28px;height:28px;border-radius:8px"></span>
+              <span><span class="t">Cash</span><br><span class="s">Emergency fund</span></span><span class="chip" style="color:var(--teal)">16%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="features">
+    <h2>Everything you need to keep a clean record</h2>
+    <p class="sub">Version 1.0 ships with the full toolkit for a buy-and-hold investor.</p>
+    <div class="grid g3">
+      <div class="card">
+        <span class="ico bg-blue"><svg viewBox="0 0 24 24" fill="none"><path d="M4 18V9M10 18V5M16 18v-6M22 18H2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <h3>Interactive dashboard</h3>
+        <p>Weighted asset allocation, a six-month net-worth trend line you can drag to inspect, and monthly realised P&amp;L net of contributions — all drawn natively on your device.</p>
+      </div>
+      <div class="card">
+        <span class="ico bg-purple"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <h3>Portfolio ledger</h3>
+        <p>Full cost-basis accounting with average cost, realised P&amp;L, dividends and splits. Buys, sells, transfers and income entries with fees, dates and notes.</p>
+      </div>
+      <div class="card">
+        <span class="ico bg-teal"><svg viewBox="0 0 24 24" fill="none"><path d="M5 4h11l3 3v13H5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8 10h8M8 14h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <h3>Research journal</h3>
+        <p>Capture the reasoning behind every decision. Tag notes as Idea, Research, Lesson, Question or Review, link them to a ticker, and attach photos.</p>
+      </div>
+      <div class="card">
+        <span class="ico bg-amber"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.4l6-.8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+        <h3>Watchlist</h3>
+        <p>Keep an eye on ideas without touching them. Set target prices, track progress with visual bars, and see your highlights on the dashboard.</p>
+      </div>
+      <div class="card">
+        <span class="ico bg-cyan"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19h16M7 16V9m5 7V5m5 11v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <h3>Five calculators</h3>
+        <p>Compound interest, dollar-cost averaging, return on investment, position sizing and dividend income estimation — each with year-by-year projections.</p>
+      </div>
+      <div class="card">
+        <span class="ico bg-pink"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.4-3 8.1-7 9-4-.9-7-4.6-7-9V6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <h3>Analysis &amp; privacy</h3>
+        <p>Sector allocation, concentration risk, top and bottom performers, ten display currencies, light and dark themes — and a one-tap reset that erases everything.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="how">
+    <h2>How it works</h2>
+    <p class="sub">Four steps, then close the app and get on with your life.</p>
+    <div class="split">
+      <div class="steps">
+        <div class="step">
+          <h4>Add your positions</h4>
+          <p>Enter each holding with its symbol, asset class, sector, share count and current price. Group them however you actually think.</p>
+        </div>
+        <div class="step">
+          <h4>Log every transaction</h4>
+          <p>Buys, sells, dividends, splits and transfers. Attach a photo of the confirmation so future-you knows exactly what happened.</p>
+        </div>
+        <div class="step">
+          <h4>Snapshot your net worth</h4>
+          <p>Add a monthly snapshot and watch the trend line build over time. All growth is measured against your own contributions.</p>
+        </div>
+        <div class="step">
+          <h4>Review, don't react</h4>
+          <p>Read the analysis, model scenarios in the calculators, and revisit your journal notes. There is no button to place a trade — by design.</p>
+        </div>
+      </div>
+      <div class="notice">
+        <span class="ico bg-amber"><svg viewBox="0 0 24 24" fill="none"><path d="M12 4l9 16H3z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v4M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <div>
+          <h3>Not investment advice</h3>
+          <p>
+            XM Longview is an educational record-keeping tool. It is not a broker, dealer, exchange,
+            custodian or wallet provider, and it cannot execute or route orders. Historical figures come
+            from data you entered, are not real-time market data, and past performance does not guarantee
+            future results. Verify everything against your broker's statements, and consult a qualified
+            professional before making tax or financial decisions.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="privacy">
+    <h2>Privacy is the product, not a promise</h2>
+    <p class="sub">XM Longview was built so that there is nothing to leak in the first place.</p>
+    <div class="grid g2">
+      <div class="card">
+        <h3 style="margin-top:0">What stays on your device</h3>
+        <p>Holdings, transactions, journal notes, photos, watchlist items and net-worth snapshots are written to your app's private storage on this iPhone. Nothing is uploaded, mirrored, or backed up to us.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">What leaves your device</h3>
+        <p>Nothing. The app contains no network code, no analytics, no advertising, and no third-party SDKs. We cannot see your portfolio because it never reaches us.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">Photos you attach</h3>
+        <p>Camera and photo-library access is requested only when you choose to attach an image. Images are compressed and stored inside the app, never transmitted.</p>
+      </div>
+      <div class="card">
+        <h3 style="margin-top:0">If you delete the app</h3>
+        <p>Your data is deleted with it. We cannot restore records we never held. Export or screenshot anything you want to keep before you remove XM Longview.</p>
+      </div>
+    </div>
+    <p style="margin-top:22px">
+      Read the full <a href="privacy.html">Privacy Policy</a>.
+    </p>
+  </section>
+
+  <section class="wrap">
+    <h2>Common questions</h2>
+    <p class="sub">Short answers to what people usually ask first.</p>
+    <div class="faq">
+      <details>
+        <summary>Does XM Longview connect to my brokerage?</summary>
+        <p>No. There is no account linking, no Open Banking connection, and no market data feed. Every transaction is entered by you, and every calculation is performed locally.</p>
+      </details>
+      <details>
+        <summary>Where is my data stored?</summary>
+        <p>In the app's private storage on your iPhone. Nothing is synced to iCloud by XM Longview and nothing is sent to a server. Deleting the app deletes the data.</p>
+      </details>
+      <details>
+        <summary>Is it really free?</summary>
+        <p>There are no subscriptions, no ads and no in-app purchases. There is also nothing for us to sell, because we have no data about you.</p>
+      </details>
+      <details>
+        <summary>Which devices are supported?</summary>
+        <p>iPhone on iOS 16 or later, in portrait orientation. The app is optimised for iPhone screens.</p>
+      </details>
+      <details>
+        <summary>Can I use the numbers for my taxes?</summary>
+        <p>Treat them as personal estimates only. Cost basis and gain/loss figures are derived from your entries and are not certified for filing. Always confirm against official statements and a qualified tax professional.</p>
+      </details>
+      <details>
+        <summary>How do I get help?</summary>
+        <p>Email <a href="mailto:lueilwitzmarion1262000@gmail.com">lueilwitzmarion1262000@gmail.com</a> or visit the <a href="support.html">Support page</a>. Please include your device model, iOS version and the steps that led to the problem.</p>
+      </details>
+    </div>
+  </section>
+
+  <section class="wrap" id="get">
+    <div class="cta-band">
+      <h2>Start with an empty page</h2>
+      <p class="sub" style="margin:0 auto 26px">
+        Download XM Longview, open it, and record your first holding. No sign-up, no email required, nothing leaves the phone.
+      </p>
+      <div class="cta">
+        <a class="store" href="#get">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-3 .9-3.8 2.3-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2.1-1.1 2.8-2.2c.9-1.3 1.3-2.5 1.3-2.6-.1 0-2.5-1-2.5-3.9zM14.2 5.2c.6-.8 1-1.8.9-2.9-.9 0-2 .6-2.6 1.4-.6.7-1.1 1.7-.9 2.8 1 .1 2-.5 2.6-1.3z"/></svg>
+          Download on the App Store
+        </a>
+        <a class="btn" href="mailto:lueilwitzmarion1262000@gmail.com">Email Support</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <span>© <span id="year">2026</span> XM Longview. All rights reserved.</span>
+      <nav>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="support.html">Support</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="mailto:lueilwitzmarion1262000@gmail.com">Contact</a>
+      </nav>
+    </div>
+    <p class="fine">
+      XM Longview is an independent educational tool. It is not a broker, dealer, exchange, custodian or
+      investment adviser, and it does not provide investment, tax or legal advice. Investing involves risk,
+      including the possible loss of principal. Past performance does not guarantee future results.
+    </p>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
